@@ -1,3 +1,13 @@
-.heading{
-    
+
+body {
+  background-color: #d3bdb0;
+}
+.header{
+    color:#715b64;
+    font-family: 'Courier Prime', monospace;
+
+}
+.topbar{
+    color:#715b64;
+    font-family: 'Courier Prime', monospace;
 }
