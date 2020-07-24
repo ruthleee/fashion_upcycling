@@ -1,9 +1,14 @@
-body{
+#bod{
     background-color: #d3bdb0;
 }
 
 .heading{
-    color: #89937c;
-    font-family: 'Courier Prime', monospace;
 
+    color: #89937c;
+    
+
+}
+
+.mono{
+    font-family: 'Courier Prime', monospace;
 }
