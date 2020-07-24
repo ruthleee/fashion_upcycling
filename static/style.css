@@ -1,0 +1,16 @@
+/* <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"> */
+body {
+  background-color: #d3bdb0
+}
+.header{
+    color:#89937c;
+    font-family: 'Courier Prime', monospace;
+
+}
+.topbar{
+    color:#715b64;
+    font-family: 'Courier Prime', monospace;
+}
+.black {
+    background-color: black;
+}
