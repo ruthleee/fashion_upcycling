@@ -2,14 +2,14 @@
 # -- Import section --
 # AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s
 from flask import Flask
-<<<<<<< HEAD
+
 # from flask import render_template
 # from flask import request
 from googleapiclient import discovery
-=======
+
 from flask import render_template
 from flask import request
->>>>>>> 4ded82cbc49c238b961b95dbe73de8e415e53f7b
+
 
 
 # -- Initialization section --
@@ -20,7 +20,13 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-<<<<<<< HEAD
+    return render_template("index.html")
+@app.route('/upcycleSearch')
+def upcycleSearch():
+    return render_template("upcycleSearch.html")
+app.route('/youtube')
+def youtube():
+
     api_key = "AIzaSyC6rqXcj4ZRxEBW_t-mPzr_3G4ei25HtO8"
     youtube = discovery.build('youtube', 'v3', developerKey=api_key)
     # req = youtube.search().list(q='machine learning tutorial', part='snippet', type='video', maxResults=50, pageToken=None)
