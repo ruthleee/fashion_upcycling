@@ -1,0 +1,39 @@
+<html>
+
+<head>
+	<!-- <link href="../static/css/upStyle.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upStyle.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="http://website.com/css/custom-style.css?ver=<?php echo rand(111,999)?>"> -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <title>ctrl-alt-thread</title>
+    
+</head>
+
+<body id = "bod">
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c1ae9f;">
+		<a class="navbar-brand" href="#"><img src="../static/square_logo.png" id="logo" width="40"/></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-item nav-link active mono" href="#">About Us</a>
+					<a class="nav-item nav-link mono " href="#">/ Upcycle</a>
+					<a class="nav-item nav-link mono" href="#">/ Community</a>
+					<a class="nav-item nav-link mono" href="#">/ Impact</a>
+				</div>
+			</div>
+	</nav>
+	<center><h2 class='heading text mono'>Save money and the environment by upcycling your clothes!</h2></center>
+	<form>
+		<center><input style = "background-color:#c1ae9f" size="80" type="text" name="item" placeholder="What kind of garment are you looking for?"/> 
+		<input class="btn btn-outline-light btn-sm" type="submit" value="Submit"/>
+        <!-- <button type="button" class="btn btn-outline-light">Light</button> -->
+        </center>
+        </form>
+</body>
+
+</html>
