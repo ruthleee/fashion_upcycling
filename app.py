@@ -32,7 +32,6 @@ def index():
     return render_template("index.html")
 @app.route('/upcycleSearch', methods=["GET", "POST"])
 def upcycleSearch():
-    
     return render_template("upcycleSearch.html")
 @app.route('/upcycleResults', methods=["GET", "POST"])
 def upcycleResults():
@@ -43,28 +42,7 @@ def upcycleResults():
         return render_template('upcycleResults.html', user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
-@app.route('/parsehub')
-def parsehub():
-    params = {
-        "api_key": "tAgMZD_gGfMN",
-        "format": "json",
-        "project_token": "tTunoV0JjdT4",
-        "start_url": "https://directory.goodonyou.eco/brand/the-r-collective",
-        "send_email": "1"
-    }
-    r = requests.post("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/run", data=params)
-    run_token = r.json()["run_token"]
-    p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
-    for i in range(10): 
-        time.sleep(1)
-        p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
-        if p.json()["data_ready"] == 1: 
-            break
-    
-    print(p.text)
-    final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
-    print(final_data.text)
-    return("hellour")
+
 
 @app.route('/parse_url')
 def parse_url(): 
@@ -91,6 +69,7 @@ def parse_url():
     # Print out the text
     # text = soup.get_text()
     # print(soup.text)
+
 @app.route("/parse_rating")
 def parse_rating():
     params = {
@@ -113,37 +92,7 @@ def parse_rating():
     final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
     print(final_data.text)
     return("hellour")
-<<<<<<< HEAD
-=======
 
-app.secret_key = "k2u3gogsdboqasd34"
-# name of database
-app.config['MONGO_DBNAME'] = 'database'
-
-# URI of database
-app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
-
-mongo = PyMongo(app)
-@app.route("/loginsignup", methods=["GET", "POST"])
-def loginsignup():
-    session.clear()
-    if request.method == "GET":
-        return render_template('login_signup.html')
-    else:
-        username = request.form["username"]
-        password = request.form["password"]
-        collection = mongo.db.users
-        user = list(collection.find({"username":username}))
-        if len(user) == 0:
-            collection.insert_one({"username": username, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8')})
-            session["username"] = username
-            return("Welcome as a new user")
-        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
-            session["username"] = username
-            return"Welcome back! Go to <a href='/index'>home</a>."
-        else:
-            return "Error"
->>>>>>> 2fccbe802d52bfc4958e0accfb6ab6be01743bea
 
 app.secret_key = "k2u3gogsdboqasd34"
 # name of database
