@@ -11,7 +11,7 @@ import urllib.request
 import re
 from urllib.request import Request, urlopen
 import time
-from model import youtube_search
+from model import search_youtube
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from flask_pymongo import PyMongo
