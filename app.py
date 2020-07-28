@@ -11,7 +11,8 @@ import urllib.request
 import re
 from urllib.request import Request, urlopen
 import time
-from model import youtube_search
+import model
+# from model import search_youtube
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from flask_pymongo import PyMongo
@@ -39,6 +40,7 @@ def upcycleResults():
         user_garment = request.form["garment"]
         user_brand = request.form["brand"]
         user_price = request.form["price"]
+        search_results = model.search_youtube(user_garment)
         return render_template('upcycleResults.html', user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
