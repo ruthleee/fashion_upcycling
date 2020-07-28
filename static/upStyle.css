@@ -1,8 +1,8 @@
-#bod{
+.bod{
     background-color: #d3bdb0;
 }
 
-.heading{
+.green{
 
     color: #89937c;
     
@@ -12,3 +12,18 @@
 .mono{
     font-family: 'Courier Prime', monospace;
 }
+
+.mutedP{
+    color: #715b64;
+}
+
+.plum{
+    color:#854774;
+}
+
+.pushCenter{
+  padding-right: 15%;
+  padding-left: 15%;
+}
+
+

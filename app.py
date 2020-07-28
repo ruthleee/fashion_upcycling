@@ -66,7 +66,6 @@ def parsehub():
     print(final_data.text)
     return("hellour")
 
-
 @app.route('/parse_url')
 def parse_url(): 
     url = 'https://www2.hm.com/en_us/productpage.0876657002.html'
@@ -114,6 +113,37 @@ def parse_rating():
     final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
     print(final_data.text)
     return("hellour")
+<<<<<<< HEAD
+=======
+
+app.secret_key = "k2u3gogsdboqasd34"
+# name of database
+app.config['MONGO_DBNAME'] = 'database'
+
+# URI of database
+app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
+
+mongo = PyMongo(app)
+@app.route("/loginsignup", methods=["GET", "POST"])
+def loginsignup():
+    session.clear()
+    if request.method == "GET":
+        return render_template('login_signup.html')
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
+        collection = mongo.db.users
+        user = list(collection.find({"username":username}))
+        if len(user) == 0:
+            collection.insert_one({"username": username, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8')})
+            session["username"] = username
+            return("Welcome as a new user")
+        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
+            session["username"] = username
+            return"Welcome back! Go to <a href='/index'>home</a>."
+        else:
+            return "Error"
+>>>>>>> 2fccbe802d52bfc4958e0accfb6ab6be01743bea
 
 app.secret_key = "k2u3gogsdboqasd34"
 # name of database
