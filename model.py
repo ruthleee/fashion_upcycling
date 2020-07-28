@@ -1,4 +1,9 @@
 from googleapiclient import discovery
+from flask import Flask
+from flask_pymongo import PyMongo
+from flask import session
+import bcrypt
+app = Flask(__name__)
 def search_youtube(item_name, num_queries=10):
     api_key = "AIzaSyDChP61rSI95mLnjomoCBXKpnD-YrnZKO4"
     youtube = discovery.build('youtube', 'v3', developerKey=api_key)
@@ -22,3 +27,48 @@ def search_youtube(item_name, num_queries=10):
         return "No upcycling tutorials were found for '" +  item-name + ".' Please try searching with a different item name."
     else: 
         return search_results
+# search_youtube("ribbed crop top", 4)
+
+
+def parse_rating(brand):
+
+    params = {
+        "api_key": "tAgMZD_gGfMN",
+        "format": "json",
+        "project_token": "tTunoV0JjdT4",
+        "start_url": "https://directory.goodonyou.eco/brand/the-r-collective",
+        "send_email": "1"
+    }
+    r = requests.post("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/run", data=params)
+    run_token = r.json()["run_token"]
+    p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
+    for i in range(10): 
+        time.sleep(1)
+        p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
+        if p.json()["data_ready"] == 1: 
+            break
+    
+    print(p.text)
+    final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
+    print(final_data.text)
+    return("hellour")
+
+    app.config['MONGO_DBNAME'] = 'database'
+
+# URI of database
+app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
+
+mongo = PyMongo(app)
+
+def login_signup(username, password):
+        collection = mongo.db.users
+        user = list(collection.find({"username":username}))
+        if len(user) == 0:
+            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0})
+            session["username"] = username
+            return("Welcome as a new user, " + "user")
+        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
+            session["username"] = username
+            return"Welcome back, " + username + "!"
+        else:
+            return "Error"

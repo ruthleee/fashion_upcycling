@@ -97,6 +97,4 @@ def loginsignup():
             return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
         else:
             return render_template("userProfile.html", dispText=dispText)
-@app.route("/userProfile", methods=["GET", "POST"])
-def userProfile():
-    return render_template("userProfile.html")    
+        
