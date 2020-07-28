@@ -24,7 +24,9 @@
 					<a class="nav-item nav-link active mono" href="#">About Us</a>
 					<a class="nav-item nav-link mono " href="/upcycleSearch">/ Upcycle</a>
 					<a class="nav-item nav-link mono" href="#">/ Community</a>
-					<a class="nav-item nav-link mono" href="#">/ Impact</a>
+					<a class="nav-item nav-link mono" href="/userProfile"> |  Your Impact</a>
+                    <a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |
+						Log-in/Sign-up</a>
 				</div>
 			</div>
 	</nav>
@@ -34,6 +36,26 @@
     <br/>
     <br/>
 	<center><h1 class="mono green">Upcyling options for a {{user_garment}}!!</h1></center>
+    <div class="container">
+    <div class="row">
+    {% for i in range(3) %}
+    
+            <div class = "col-md-2"></div>
+            <div class="col d-flex justify-content-center">
+                <div class="card bg-dark" style="width: 18rem;">
+                <img src= "https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" class="card-img-top" alt="...">
+                <div class="card-body mx-auto">
+                    <h5 class="card-title text-white text-center">Number {{i+1}} </h5>
+                    <p class="card-text text-white text-center">DIY | Ribbed High Neck Crop Top (Under $3!)</p>
+                    <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-success">watch now</a>
+                </div>
+                </div>
+            </div>
+            <div class = "col-md-2"> </div>
+        
+            {% endfor %}
+        </div>
+    </div>
     <div class="d-flex justify-content-center">
         <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
 		<img class="card-img-top" src="https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" alt="Card image cap">

@@ -1,15 +1,53 @@
 <html>
-    <head>
-        <title>Login OR signup</title>
-    </head>
-    <body>
-        <h1>Login OR signup here</h1>
-        <form method="POST" action="/loginsignup">
-            <label for="username">User Name:</label>
-            <input type="text" name="username" value="">
-            <label for="password">Password:</label>
-            <input type="password" name="password" value="">
-            <input type="submit" value="Submit">
-        </form>
-    </body>
+
+<head>
+	<!-- <link href="../static/css/upStyle.css" rel="stylesheet"> -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upStyle.css') }}">
+	<!-- <link rel="stylesheet" type="text/css" href="http://website.com/css/custom-style.css?ver=<?php echo rand(111,999)?>"> -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+	<title>login/signup</title>
+</head>
+
+<body class="bod">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #c1ae9f;">
+		<a class="navbar-brand" href="/index"><img src="../static/sq-ctrl-alt-thread.PNG" id="logo" width="70"/></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link active topbar"
+						href="#">About Us</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/upcycleSearch">
+						| Upcycle</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="#"> |
+						Community</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/userProfile"> |
+						Your Impact</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |
+						Log-in/Sign-up</a>
+				</div>
+			</div>
+	</nav>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+	<center><h1 class="mono plum pt-4 pb-4">Login OR signup here</h1>
+	<form method="POST" action="/loginsignup" class="mono">
+		<label for="username">User Name:</label>
+		<input type="text" name="username" value="">
+		<label for="email">Email:</label>
+		<input type="text" name="email" value="">
+		<label for="password">Password:</label>
+		<input type="password" name="password" value="">
+		<input type="submit" class="btn btn-outline-light btn-sm" value="Submit">
+        </form> </center>
+</body>
+
 </html>

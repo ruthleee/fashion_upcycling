@@ -4,6 +4,11 @@ import time
 import requests
 import urllib.request
 import re
+from flask import Flask
+from flask_pymongo import PyMongo
+from flask import session
+import bcrypt
+app = Flask(__name__)
 
 def search_youtube(item_name, num_queries=10):
     api_key = "AIzaSyDChP61rSI95mLnjomoCBXKpnD-YrnZKO4"
@@ -32,13 +37,7 @@ def search_youtube(item_name, num_queries=10):
 
 
 
-def parse_rating(item_brand):
-    formatted = item_brand.lower().replace("&", "and")
-    brand_to_parse = formatted.split() 
-    url_brand_key = brand_to_parse[0]
-    if len(brand_to_parse) > 1: 
-        for i in range(1,  len(brand_to_parse)):
-            url_brand_key += "-" + brand_to_parse[i]
+def parse_rating(brand):
     params = {
         "api_key": "tAgMZD_gGfMN",
         "format": "json",
@@ -61,4 +60,24 @@ def parse_rating(item_brand):
               "people": [int(ratings["peopleRate"][0]), ratings["exp_peopleRate"]],
               "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
     return scores
+
+app.config['MONGO_DBNAME'] = 'database'
+
+# URI of database
+app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
+
+mongo = PyMongo(app)
+
+def login_signup(username, password):
+        collection = mongo.db.users
+        user = list(collection.find({"username":username}))
+        if len(user) == 0:
+            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0})
+            session["username"] = username
+            return("Welcome as a new user, " + "user")
+        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
+            session["username"] = username
+            return"Welcome back, " + username + "!"
+        else:
+            return "Error"
 
