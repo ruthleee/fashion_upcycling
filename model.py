@@ -11,7 +11,7 @@ import bcrypt
 app = Flask(__name__)
 
 def search_youtube(item_name, num_queries=10):
-    api_key = "AIzaSyDChP61rSI95mLnjomoCBXKpnD-YrnZKO4"
+    api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
     youtube = discovery.build('youtube', 'v3', developerKey=api_key)
     queries = [" DIY", "  Thrift Flip", " Upcycle Tutorial"]
     #num_results = 0 
@@ -37,7 +37,13 @@ def search_youtube(item_name, num_queries=10):
 
 
 
-def parse_rating(brand):
+def parse_rating(item_brand):
+    formatted = item_brand.lower().replace("&", "and")
+    brand_to_parse = formatted.split() 
+    url_brand_key = brand_to_parse[0]
+    if len(brand_to_parse) > 1: 
+        for i in range(1,  len(brand_to_parse)):
+            url_brand_key += "-" + brand_to_parse[i]
     params = {
         "api_key": "tAgMZD_gGfMN",
         "format": "json",
