@@ -1,21 +1,23 @@
 from googleapiclient import discovery
-
-
-def youtube_search(): 
-    api_key = "AIzaSyDChP61rSI95mLnjomoCBXKpnD-YrnZKO4"
-    #savitha's first api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
-    # ruth's api_key = "AIzaSyC6rqXcj4ZRxEBW_t-mPzr_3G4ei25HtO8"
+def search_youtube(item_name, num_queries=10):
+    api_key = "AIzaSyC6rqXcj4ZRxEBW_t-mPzr_3G4ei25HtO8"
     youtube = discovery.build('youtube', 'v3', developerKey=api_key)
-    search_by = 'DIY crop hoodie'
-    search_keyword = youtube.search().list(q=search_by, part='snippet', type='video', maxResults=10, pageToken=None)
-    print(search_keyword)
-    response = search_keyword.execute() 
-    results = response['items']
-    # results = search_keyword.get("items", []) 
-    for each_item in results: 
-        print(each_item['id']['videoId'])
-        print(each_item['snippet']['title'])
-        print(each_item['snippet']['description'])
-        print(each_item['snippet']['thumbnails']['high']['url'])
-    return "search complete"
-
+    queries = [" DIY", "  Thrift Flip", " Upcycle Tutorial"]
+    #num_results = 0 
+    search_results = {}
+    for query in queries: 
+        search_by = item_name + query
+        request = youtube.search().list(q=search_by, part='snippet', type='video', maxResults=num_queries, pageToken=None)
+        result = request.execute() 
+        #num_results += result['pageInfo.totalResults']
+        items = result['items']
+        for each_item in items: 
+            search_results[each_item['snippet']['title']] = {"video_url": "https://www.youtube.com/watch?v=" + each_item['id']['videoId'], 
+                                                            "description": each_item['snippet']['description'], 
+                                                            "thumbnail_url": each_item['snippet']['thumbnails']['high']['url']}
+        if len(search_results) > 0 and query == "  Thrift Flip": 
+            break
+    if len(search_results) == 0: 
+        return "No upcycling tutorials were found for '" +  item-name + ".' Please try searching with a different item name."
+    else: 
+        return search_results
