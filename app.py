@@ -41,6 +41,7 @@ def upcycleResults():
         user_brand = request.form["brand"]
         user_price = request.form["price"]
         search_results = model.search_youtube(user_garment)
+        scores = model.parse_rating(user_brand)
         return render_template('upcycleResults.html', user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
@@ -48,7 +49,7 @@ def upcycleResults():
 
 @app.route('/parse_url')
 def parse_url(): 
-    url = 'https://www2.hm.com/en_us/productpage.0876657002.html'
+    url = 'https://www2.hm.com/en_us/productpage.0889379009.html'
     headers = {}
     headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
     req = Request(url=url, headers=headers) 
@@ -59,9 +60,9 @@ def parse_url():
     print(title)
     head_elem = soup.find('h1')
     print(head_elem.text)
-    def contains_price(s3):
-     return ("$" in s3)
-    print(soup.find_all(string=contains_price))
+    # def contains_price(s3):
+    #  return ("$" in s3)
+    # print(soup.find_all(string=contains_price))
     return ("hello")
     # print(soup.find_all('html'))
     # text = soup.get_text()
@@ -78,8 +79,8 @@ def parse_rating():
         "api_key": "tAgMZD_gGfMN",
         "format": "json",
         "project_token": "tTunoV0JjdT4",
-        "start_url": "https://directory.goodonyou.eco/brand/the-r-collective",
-        "send_email": "1"
+        "start_url": "https://directory.goodonyou.eco/brand/h-and-m",
+        "send_email": "0"
     }
     r = requests.post("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/run", data=params)
     run_token = r.json()["run_token"]
@@ -90,10 +91,19 @@ def parse_rating():
         if p.json()["data_ready"] == 1: 
             break
     
-    print(p.text)
+    # print(p)
+    # print(p.text)
+  
     final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
-    print(final_data.text)
+    ratings = final_data.json()
+    #k
+    print(ratings["planetRate"])
+    # print(final_data.text)
     return("hellour")
+
+app.secret_key = "k2u3gogsdboqasd34"
+# name of database
+app.config['MONGO_DBNAME'] = 'database'
 
 
 app.secret_key = "k2u3gogsdboqasd34"
