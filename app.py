@@ -12,6 +12,7 @@ import re
 from urllib.request import Request, urlopen
 import time
 from model import search_youtube
+import model
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from flask_pymongo import PyMongo
@@ -32,7 +33,6 @@ def index():
     return render_template("index.html")
 @app.route('/upcycleSearch', methods=["GET", "POST"])
 def upcycleSearch():
-    
     return render_template("upcycleSearch.html")
 @app.route('/upcycleResults', methods=["GET", "POST"])
 def upcycleResults():
@@ -40,46 +40,12 @@ def upcycleResults():
         user_garment = request.form["garment"]
         user_brand = request.form["brand"]
         user_price = request.form["price"]
+        search_results = model.search_youtube(user_garment)
         return render_template('upcycleResults.html', user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
-@app.route('/parsehub')
-def parsehub():
-    params = {
-        "api_key": "tAgMZD_gGfMN",
-        "format": "json",
-        "project_token": "tTunoV0JjdT4",
-        "start_url": "https://directory.goodonyou.eco/brand/the-r-collective",
-        "send_email": "1"
-    }
-    r = requests.post("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/run", data=params)
-    run_token = r.json()["run_token"]
-    p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
-    for i in range(10): 
-        time.sleep(1)
-        p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
-        if p.json()["data_ready"] == 1: 
-            break
-    
-    print(p.text)
-    final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
-    print(final_data.text)
-    return("hellour")
-@app.route('/webS')
-def webS():
-    req = Request('http://pythonprogramming.net/parse-website-using-regular-expressions-urllib/', headers={'User-Agent': 'Mozilla/5.0'})
-    respData = urlopen(req).read()
-    # url = 'https://directory.goodonyou.eco/brand/white-house-black-market'
 
-    # req = urllib.request.Request(url)
-    # resp = urllib.request.urlopen(req)
-    # respData = resp.read()
-    rated = re.findall(r'<p>(.*?)</p>',str(respData))
-    # <span class="StyledText-sc-1sadyjn-0 bBUTWf">Rated: Not Good Enough</span>
-    print(rated)
-    # for eachR in rated:
-    #     print(eachR)
-    return("hellur")
+
 
 
 @app.route('/parse_url')
@@ -107,6 +73,7 @@ def parse_url():
     # Print out the text
     # text = soup.get_text()
     # print(soup.text)
+
 @app.route("/parse_rating")
 def parse_rating():
     params = {
@@ -129,7 +96,6 @@ def parse_rating():
     final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
     print(final_data.text)
     return("hellour")
-
 app.secret_key = "k2u3gogsdboqasd34"
 # name of database
 app.config['MONGO_DBNAME'] = 'database'
@@ -157,6 +123,3 @@ def loginsignup():
             return"Welcome back! Go to <a href='/index'>home</a>."
         else:
             return "Error"
-
-
-
