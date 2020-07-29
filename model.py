@@ -30,7 +30,8 @@ def search_youtube(item_name, num_queries=10):
         for each_item in items: 
             search_results[each_item['snippet']['title']] = {"video_url": "https://www.youtube.com/watch?v=" + each_item['id']['videoId'], 
                                                             "description": each_item['snippet']['description'], 
-                                                            "thumbnail_url": each_item['snippet']['thumbnails']['high']['url']}
+                                                            "thumbnail_url": each_item['snippet']['thumbnails']['high']['url'],
+                                                            "title": each_item['snippet']['title'] }
         if len(search_results) > 0 and query =="  Thrift Flip": 
             print("didn't make third query")
             break

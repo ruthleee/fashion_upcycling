@@ -60,11 +60,14 @@ def update_user_progress():
         user = list(collection.find({"username":username}))
         user = user[0]
         new_env_score = user['env_score'] + int(request.form["env_score"])
-        print(new_env_score)
         new_savings = user['savings'] + int(request.form["savings"])
+        print(user['fav_items'])
+        new_fav_items= user['fav_items'].append(request.form["fav_item"])
+        print(new_env_score)
         print(new_savings)
-        collection.update({"username": username}, { "$set": {"savings": new_savings, "env_score": new_env_score}})
-        return "hello"
+        print(new_fav_items)
+        collection.update({"username": username}, { "$set": {"savings": new_savings, "env_score": new_env_score, "fav_items": new_fav_items}})
+        return render_template("userProfile.html")
     else: 
         return redirect("/")
 
@@ -115,14 +118,12 @@ def loginsignup():
         collection = mongo.db.users
         user = list(collection.find({"username":username}))
         if len(user) == 0:
-            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0, "env_score": 0})
+            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0, "env_score": 0, "fav_items":["test"]})
             session["username"] = username
             dispText= "Welcome as a new user, " + "user"
             return render_template("userProfile.html", dispText=dispText)
         elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
             session["username"] = username
-            # foo = 12
-            # collection.update({"username": "user5"},{ "$set": {"savings": foo,  "env_score": 5}})
             dispText= "Welcome back, " + username + "!"
             return render_template("userProfile.html", dispText=dispText)
         else:
@@ -135,4 +136,11 @@ def logout():
 
 @app.route("/userProfile", methods=["GET", "POST"])
 def userProfile():
-    return render_template("userProfile.html")    
+    username = session["username"]
+    collection = mongo.db.users
+    user = list(collection.find({"username":username}))
+    user = user[0]
+    env_score = user["env_score"]
+    savings = user["savings"]
+    fav_items = user["fav_items"]
+    return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)    
