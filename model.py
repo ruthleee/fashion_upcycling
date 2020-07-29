@@ -7,14 +7,16 @@ import re
 from flask import Flask
 from flask_pymongo import PyMongo
 from flask import session
+import json
 import bcrypt
 app = Flask(__name__)
 
-api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8"
+api_key="AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
+#cntrl alt thread api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8" out of quota: 10:14 AM PST, Julyy 29th
 #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
 youtube = discovery.build('youtube', 'v3', developerKey=api_key)
 
-def search_youtube(item_name, num_queries=10):
+def search_youtube(item_name, num_queries=5):
     # api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8"
     # #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
     # youtube = discovery.build('youtube', 'v3', developerKey=api_key)
@@ -28,14 +30,14 @@ def search_youtube(item_name, num_queries=10):
         #num_results += result['pageInfo.totalResults']
         items = result['items']
         for each_item in items: 
-            search_results[each_item['snippet']['title']] = {"video_url": "https://www.youtube.com/watch?v=" + each_item['id']['videoId'], 
-                                                            "description": each_item['snippet']['description'], 
-                                                            "thumbnail_url": each_item['snippet']['thumbnails']['high']['url'],
-                                                            "title": each_item['snippet']['title'] }
+            search_results[each_item["snippet"]["title"]] = {"video_url": "https://www.youtube.com/watch?v=" + each_item["id"]["videoId"], 
+                                                            "description": each_item["snippet"]["description"], 
+                                                            "thumbnail_url": each_item["snippet"]["thumbnails"]["high"]["url"],
+                                                            "title": each_item["snippet"]["title"] }
         if len(search_results) > 0 and query =="  Thrift Flip": 
             print("didn't make third query")
             break
-    # print(search_results)
+    # print(type(search_results))
     if len(search_results) == 0: 
         return "No upcycling tutorials were found for '" +  item_name + ".' Please try searching with a different item name."
     else: 
@@ -71,7 +73,7 @@ def parse_rating(item_brand):
     scores = {"planet": [int(ratings["planetRate"][0]), ratings["exp_planetRate"]],
               "people": [int(ratings["peopleRate"][0]), ratings["exp_peopleRate"]],
               "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
-    print(scores)
+    # print(scores)
     return scores
 
 app.config['MONGO_DBNAME'] = 'database'
