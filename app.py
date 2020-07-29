@@ -1,7 +1,7 @@
 # ---- YOUR APP STARTS HERE ----
 # -- Import section --
 # AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s
-from flask import Flask
+from flask import Flask, redirect
 from googleapiclient import discovery
 from googleapiclient import discovery
 from flask import render_template
@@ -18,6 +18,7 @@ from bs4 import BeautifulSoup
 from flask_pymongo import PyMongo
 from flask import session
 import bcrypt
+
 
 
 
@@ -43,11 +44,29 @@ def upcycleResults():
         user_price = request.form["price"]
         search_results = model.search_youtube(user_garment)
         scores = model.parse_rating(user_brand)
-        return render_template('upcycleResults.html', user_garment=user_garment, user_brand=user_brand, user_price=user_price)
+        score = model.calculate_score(scores)
+        print(score)
+        keys = list(search_results.keys())
+        print(keys)
+        return render_template('upcycleResults.html', score=score, scores=scores, keys=keys, search_results=search_results, user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
 
-
+@app.route('/updateUserProgress', methods=["GET", "POST"])
+def update_user_progress():
+    username = session["username"]
+    if request.method == "POST": 
+        collection = mongo.db.users
+        user = list(collection.find({"username":username}))
+        user = user[0]
+        new_env_score = user['env_score'] + int(request.form["env_score"])
+        print(new_env_score)
+        new_savings = user['savings'] + int(request.form["savings"])
+        print(new_savings)
+        collection.update({"username": username}, { "$set": {"savings": new_savings, "env_score": new_env_score}})
+        return "hello"
+    else: 
+        return redirect("/")
 
 
 @app.route('/parse_url')
@@ -87,18 +106,33 @@ app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mo
 mongo = PyMongo(app)
 @app.route("/loginsignup", methods=["GET", "POST"])
 def loginsignup():
-    session.clear()
     if request.method == "GET":
         return render_template('login_signup.html')
     else:
         username = request.form["username"]
         password = request.form["password"]
         email = request.form["email"]
-        dispText = login_signup(username, password)
-        if dispText=="Error":
-            return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
-        else:
+        collection = mongo.db.users
+        user = list(collection.find({"username":username}))
+        if len(user) == 0:
+            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0, "env_score": 0})
+            session["username"] = username
+            dispText= "Welcome as a new user, " + "user"
             return render_template("userProfile.html", dispText=dispText)
+        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
+            session["username"] = username
+            # foo = 12
+            # collection.update({"username": "user5"},{ "$set": {"savings": foo,  "env_score": 5}})
+            dispText= "Welcome back, " + username + "!"
+            return render_template("userProfile.html", dispText=dispText)
+        else:
+          return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
+
+@app.route("/logout", methods=["GET", "POST"])
+def logout(): 
+      session.clear()
+      return render_template("index.html")
+
 @app.route("/userProfile", methods=["GET", "POST"])
 def userProfile():
     return render_template("userProfile.html")    

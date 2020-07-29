@@ -10,9 +10,14 @@ from flask import session
 import bcrypt
 app = Flask(__name__)
 
+api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8"
+#old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
+youtube = discovery.build('youtube', 'v3', developerKey=api_key)
+
 def search_youtube(item_name, num_queries=10):
-    api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
-    youtube = discovery.build('youtube', 'v3', developerKey=api_key)
+    # api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8"
+    # #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
+    # youtube = discovery.build('youtube', 'v3', developerKey=api_key)
     queries = [" DIY", "  Thrift Flip", " Upcycle Tutorial"]
     #num_results = 0 
     search_results = {}
@@ -26,12 +31,12 @@ def search_youtube(item_name, num_queries=10):
             search_results[each_item['snippet']['title']] = {"video_url": "https://www.youtube.com/watch?v=" + each_item['id']['videoId'], 
                                                             "description": each_item['snippet']['description'], 
                                                             "thumbnail_url": each_item['snippet']['thumbnails']['high']['url']}
-        if len(search_results) > 0 and query == "  Thrift Flip": 
+        if len(search_results) > 0 and query =="  Thrift Flip": 
             print("didn't make third query")
             break
-    print(search_results)
+    # print(search_results)
     if len(search_results) == 0: 
-        return "No upcycling tutorials were found for '" +  item-name + ".' Please try searching with a different item name."
+        return "No upcycling tutorials were found for '" +  item_name + ".' Please try searching with a different item name."
     else: 
         return search_results
 
@@ -65,6 +70,7 @@ def parse_rating(item_brand):
     scores = {"planet": [int(ratings["planetRate"][0]), ratings["exp_planetRate"]],
               "people": [int(ratings["peopleRate"][0]), ratings["exp_peopleRate"]],
               "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
+    print(scores)
     return scores
 
 app.config['MONGO_DBNAME'] = 'database'
@@ -74,16 +80,23 @@ app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mo
 
 mongo = PyMongo(app)
 
-def login_signup(username, password):
+def login_signup(username, password, email):
         collection = mongo.db.users
         user = list(collection.find({"username":username}))
         if len(user) == 0:
-            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0})
+            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0, "env_score": 0})
             session["username"] = username
             return("Welcome as a new user, " + "user")
         elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
             session["username"] = username
+            # foo = 12
+            # collection.update({"username": "user5"},{ "$set": {"savings": foo,  "env_score": 5}})
             return"Welcome back, " + username + "!"
         else:
             return "Error"
-
+def calculate_score(scores):
+    print(scores['planet'][0])
+    print(scores["animal"][0])
+    print(scores["people"][0])
+    numerator = scores["planet"][0] + scores["people"][0] + scores["animal"][0]
+    return int((float(numerator)/15.0)*100.0)

@@ -10,6 +10,19 @@
 		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
 	<title>ctrl-alt-thread</title>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    function cmd(savings, env_score, username){
+        $.ajax(
+            {
+            type: "POST",
+            url: `127.0.0.1:5000/updateUserProgress?savings=${savings}&env_score=${env_score}&username=${username}`,
+            success: function () { 
+                alert("User Progress Updated")
+            },
+        });                
+    }
+    </script> -->
 
 </head>
 
@@ -24,9 +37,9 @@
 					<a class="nav-item nav-link active mono" href="#">About Us</a>
 					<a class="nav-item nav-link mono " href="/upcycleSearch">/ Upcycle</a>
 					<a class="nav-item nav-link mono" href="#">/ Community</a>
-					<a class="nav-item nav-link mono" href="/userProfile"> |  Your Impact</a>
-                    <a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |
-						Log-in/Sign-up</a>
+					<a class="nav-item nav-link mono" href="/userProfile"> |  Your Dashboard</a>
+                    <a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |Log-in/Sign-up</a>
+                    <a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/logout" > | Log Out</a>
 				</div>
 			</div>
 	</nav>
@@ -35,8 +48,11 @@
     <br/>
     <br/>
     <br/>
-	<center><h1 class="mono green">Upcyling options for a {{user_garment}}!!</h1></center>
-    <div class="container">
+	<center><h1 class="mono green">Upcyling options for a {{user_garment}}!</h1></center>
+    <center><h2 class="mono green"> Price savings: ${{user_price}} Environmental Friendliness Points: {{score}} </h2><center>
+    
+    
+    <!-- <div class="container">
     <div class="row">
     {% for i in range(3) %}
     
@@ -55,62 +71,103 @@
         
             {% endfor %}
         </div>
-    </div>
+    </div> -->
     <div class="d-flex justify-content-center">
-        <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
-		<img class="card-img-top" src="https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" alt="Card image cap">
-		<div class="card-body">
-			<h5 class="card-title">DIY | Ribbed High Neck Crop Top (Under $3!)</h5>
-			<p class="card-text">If you guys did enjoy this video don't forget to hit the LIKE, COMMENT & SUBSCRIBE for
-				more videos like this, and also turn the notification bell ON to keep you...</p>
-		</div>
-		<div class="card-body">
-			<center><div class="btn-group" role="group" aria-label="Basic example">
-				<button type="button" href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-outline-light">Tutorial</button>
-				<button type="button" href='#' class="btn btn-outline-light">Calculate</button>
-				<button type="button" href='#' class="btn btn-outline-light">Add to portfolio</button>
-			</div></center>
-			<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+            <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
+            <img class="card-img-top" src= {{search_results[keys[0]]["thumbnail_url"]}} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{keys[0]}}</h5>
+                <p class="card-text">{{search_results[keys[0]]["description"]}}</p>
+            </div>
+            <div class="card-body">
+                <center><div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="row text-center">
+                        <div class="col">
+                           <a href={{search_results[keys[0]]["video_url"]}}  class="btn btn-outline-light">Tutorial</a>
+                        </div>
+                    </div>
+                    <!-- <button type="button" href= "{{search_results[keys[0]]["video_url"]}}" class="btn btn-outline-light">Tutorial</button>  -->
+                    <div class="row text-center">
+                        <div class="col">
+                            <form method="post" action="/updateUserProgress">
+                            <input type="text" name="env_score" style= "display:none" value="{{score}}" >
+                            <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
+                            <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
+                            </form>
+                         </div>
+                     </div>
+                    
+                </div></center>
+                <!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
+                <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
 
-		</div>
-	</div></div>
-        <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
-		<img class="card-img-top" src="https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" alt="Card image cap">
-		<div class="card-body">
-			<h5 class="card-title">DIY | Ribbed High Neck Crop Top (Under $3!)</h5>
-			<p class="card-text">If you guys did enjoy this video don't forget to hit the LIKE, COMMENT & SUBSCRIBE for
-				more videos like this, and also turn the notification bell ON to keep you...</p>
-		</div>
-		<div class="card-body">
-			<center><div class="btn-group" role="group" aria-label="Basic example">
-				<button type="button" href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-outline-light">Tutorial</button>
-				<button type="button" href='#' class="btn btn-outline-light">Calculate</button>
-				<button type="button" href='#' class="btn btn-outline-light">Add to portfolio</button>
-			</div></center>
-			<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+            </div>
+        </div></div>
 
-		</div>
-	</div></div>
-        <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
-		<img class="card-img-top" src="https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" alt="Card image cap">
-		<div class="card-body">
-			<h5 class="card-title">DIY | Ribbed High Neck Crop Top (Under $3!)</h5>
-			<p class="card-text">If you guys did enjoy this video don't forget to hit the LIKE, COMMENT & SUBSCRIBE for
-				more videos like this, and also turn the notification bell ON to keep you...</p>
-		</div>
-		<div class="card-body">
-			<center><div class="btn-group" role="group" aria-label="Basic example">
-				<button type="button" href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-outline-light">Tutorial</button>
-				<button type="button" href='#' class="btn btn-outline-light">Calculate</button>
-				<button type="button" href='#' class="btn btn-outline-light">Add to portfolio</button>
-			</div></center>
-			<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+        <div class="d-flex justify-content-center">
+            <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
+            <img class="card-img-top" src= {{search_results[keys[1]]["thumbnail_url"]}} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{keys[1]}}</h5>
+                <p class="card-text">{{search_results[keys[1]]["description"]}}</p>
+            </div>
+            <div class="card-body">
+                <center><div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="row text-center">
+                        <div class="col">
+                           <a href={{search_results[keys[1]]["video_url"]}}  class="btn btn-outline-light">Tutorial</a>
+                        </div>
+                    </div>
+                    <!-- <button type="button" href= "{{search_results[keys[0]]["video_url"]}}" class="btn btn-outline-light">Tutorial</button>  -->
+                    <div class="row text-center">
+                        <div class="col">
+                            <form method="post" action="/updateUserProgress">
+                            <input type="text" name="env_score" style= "display:none" value="{{score}}" >
+                            <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
+                            <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
+                            </form>
+                         </div>
+                     </div>
+                    
+                </div></center>
+                <!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
+                <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
 
-		</div>
-	</div></div>
+            </div>
+        </div></div>
+        
+            <div class="d-flex justify-content-center">
+            <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
+            <img class="card-img-top" src= {{search_results[keys[2]]["thumbnail_url"]}} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{keys[2]}}</h5>
+                <p class="card-text">{{search_results[keys[2]]["description"]}}</p>
+            </div>
+            <div class="card-body">
+                 <center><div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="row text-center">
+                        <div class="col">
+                           <a href={{search_results[keys[2]]["video_url"]}}  class="btn btn-outline-light">Tutorial</a>
+                        </div>
+                    </div>
+                    <!-- <button type="button" href= "{{search_results[keys[0]]["video_url"]}}" class="btn btn-outline-light">Tutorial</button>  -->
+                    <div class="row text-center">
+                        <div class="col">
+                            <form method="post" action="/updateUserProgress">
+                            <input type="text" name="env_score" style= "display:none" value="{{score}}" >
+                            <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
+                            <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
+                            </form>
+                         </div>
+                     </div>
+                    
+                </div></center>
+                <!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
+                <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+
+            </div>
+        </div></div>
+       
 
 
     </div>
@@ -120,3 +177,6 @@
 </body>
 
 </html>
+
+
+ 
