@@ -83,8 +83,6 @@ def update_user_progress():
         fav_item_index = int(request.form["fav_item_index"])
         new_item = all_items[session["keys"][fav_item_index]]
         print(new_item)
-       
-
         collection.update(
             {"username": username}, 
             {"$push": {"fav_items": new_item}}
@@ -96,7 +94,10 @@ def update_user_progress():
         # print(new_fav_items)
         # new_fav_items = ["hi"]
         collection.update({"username": username}, { "$set": {"savings": new_savings, "env_score": new_env_score}})
-        return render_template("userProfile.html")
+        env_score = user["env_score"]
+        savings = user["savings"]
+        fav_items = user["fav_items"]
+        return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)    
     else: 
         return redirect("/")
 
@@ -159,8 +160,12 @@ def loginsignup():
             session["data"] = None
             session["scores"] = None
             session["keys"] = None
+            user = user[0]
+            env_score = user["env_score"]
+            savings = user["savings"]
+            fav_items = user["fav_items"]
             dispText= "Welcome back, " + username + "!"
-            return render_template("userProfile.html", dispText=dispText)
+            return render_template("userProfile.html", dispText=dispText,env_score=env_score, savings=savings, fav_items=fav_items )
         else:
           return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
 
