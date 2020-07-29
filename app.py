@@ -64,7 +64,7 @@ def update_user_progress():
         new_savings = user['savings'] + int(request.form["savings"])
         print(new_savings)
         collection.update({"username": username}, { "$set": {"savings": new_savings, "env_score": new_env_score}})
-        return "hello"
+        return render_template("/userProfile.html")
     else: 
         return redirect("/")
 
