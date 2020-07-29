@@ -14,6 +14,7 @@ api_key="AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
 #cntrl alt thread api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8" out of quota: 10:14 AM PST, Julyy 29th
 #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
 youtube = discovery.build('youtube', 'v3', developerKey=api_key)
+
 def search_youtube(item_name, num_queries=5):
     # api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8"
     # #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"

@@ -19,6 +19,7 @@ from flask_pymongo import PyMongo
 from flask import session
 import bcrypt
 import json
+
 # -- Initialization section --
 app = Flask(__name__)
 # -- Routes section --
@@ -31,6 +32,7 @@ def upcycleSearch():
     return render_template("upcycleSearch.html")
 @app.route('/upcycleResults', methods=["GET", "POST"])
 def upcycleResults():
+
     if request.method == "POST":
         user_garment = request.form["garment"]
         user_brand = request.form["brand"]
@@ -47,11 +49,16 @@ def upcycleResults():
             session["data"] = search_results
             keys = list(search_results.keys())
             session["keys"] = keys
+
         if session["scores"] != None and session["brand"] == user_brand:
             scores = session["scores"]
         else: 
             scores = model.parse_rating(user_brand)
             session["scores"] = scores
+<<<<<<< HEAD
+=======
+
+>>>>>>> 02e53c946139207a7a2bee205d56faaa7e449c8b
         score = model.calculate_score(scores)
         return render_template('upcycleResults.html', score=score, scores=scores, keys=keys, search_results=search_results, user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
@@ -76,6 +83,7 @@ def update_user_progress():
             {"username": username}, 
             {"$push": {"fav_items": new_item}}
         )
+
         # new_fav_items= user['fav_items'].append(request.form["fav_item"])
         print(new_env_score)
         print(new_savings)
