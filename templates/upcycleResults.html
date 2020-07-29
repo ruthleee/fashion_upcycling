@@ -90,8 +90,9 @@
                     <div class="row text-center">
                         <div class="col">
                             <form method="post" action="/updateUserProgress">
-                            <input type="text" name="env_score" style= "display:none" value="{{score}}" >
-                            <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
+                            <input type="text" name="env_score" style= "display:none" value="{{score}}">
+                            <input type="text" name="savings" style= "display:none" value="{{user_price}}">
+                            <input type="text" name="fav_item" style= "display:none" value="{{search_results[keys[0]]}}" >
                             <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
                             </form>
                          </div>
@@ -124,6 +125,7 @@
                             <form method="post" action="/updateUserProgress">
                             <input type="text" name="env_score" style= "display:none" value="{{score}}" >
                             <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
+                            <input type="text" name="fav_item" style= "display:none" value="{{search_results[keys[1]]}}" >
                             <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
                             </form>
                          </div>
@@ -156,6 +158,7 @@
                             <form method="post" action="/updateUserProgress">
                             <input type="text" name="env_score" style= "display:none" value="{{score}}" >
                             <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
+                            <input type="text" name="fav_item" style= "display:none" value="{{search_results[keys[2]]}}" >
                             <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
                             </form>
                          </div>

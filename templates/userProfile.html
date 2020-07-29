@@ -49,72 +49,43 @@
         <br/>
 		<div class="container">
             <img src="https://image.flaticon.com/icons/png/512/20/20687.png" width="300">
-            <h2 class="mono" style="position:absolute; top: 460px; left: 0; width: 100%; color: #d3bdb0">Savings: $87</h2>
+            <h4 class="mono" style="position:absolute; top: 460px; left: 0; width: 100%; color: #ffffff">Cumulative Savings: ${{savings}}</h4>
+            <h4 class="mono" style="position:absolute; top: 500px; left: 0; width: 100%; color: #ffffff">Cumulative Environment Friendliness Points: {{env_score}}</h4>
 			
 		</div>
         <h2 class="mono mutedP">Portfolio of saved projects</h2>
-        {% for i in range(3) %}
-		<div class="d-flex justify-content-center">
-			<div class="p-2">
-				<div class="card" style="width: 18rem; background-color:#d3bdb0">
-					<img class="card-img-top" src="https://img.youtube.com/vi/gNbMdelyFCU/hqdefault.jpg" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">*easy* cute DIY tops | thrift flip</h5>
-						<p class="card-text">Guys!! I'm so happy with how all these thrift flips turned out. Which one was your fave look? Expand for details:</p>
-					</div>
-					<div class="card-body">
-						<center>
-								<button type="button" href='https://www.youtube.com/watch?v=gNbMdelyFCU' class="btn btn-outline-light">Tutorial</button>
-								<p class="mono">Finished!</p>
 
-						</center>
-						<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+        {% if fav_items| length > 1 %}
 
-					</div>
-				</div>
-			</div>
-			<div class="p-2">
-				<div class="card" style="width: 18rem; background-color:#d3bdb0">
-					<img class="card-img-top" src="https://img.youtube.com/vi/wx_5YCj2pj0/hqdefault.jpg" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">8 DENIM THRIFT FLIPS (no sew) ☆ resize jeans, diy shorts, distressed denim + more!</h5>
-						<p class="card-text">Who else loves thrift store diys?! 🙋 Today I’m showing you how I remake and thrift flip all my denim jeans ✨ we’ll turn jeans into shorts, no sew resize jeans, diy frayed hems, add denim jacket patches and distress levis! 👕👖 open meeee for tools and patches! ↓↓↓</p>
-					</div>
-					<div class="card-body">
-						<center>
-								<button type="button" href="https://www.youtube.com/watch?v=wx_5YCj2pj0" class="btn btn-outline-light">Tutorial</button>
-								<p class="mono">Finished!</p>
-							
-						</center>
+            {% for i in range(1, fav_items| length) %}
+                <div class="row">
+                        <div class = "col-md-2"></div>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card bg-dark" style="width: 18rem;">
+                            <img src= {{fav_items[i]["thumbnail_url"]}} class="card-img-top" alt="...">
+                            <div class="card-body mx-auto">
+                                <h5 class="card-title text-white text-center">item["title"] </h5>
+                                <p class="card-text text-white text-center"> Finished!</p>
+                                <a href= {{fav_items[i]["video_url"]}} class="btn btn-success">Watch</a>
+                            </div>
+                            </div>
                         </div>
-						<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+                        <div class = "col-md-2"> </div>
+                    </div>
 
-					</div>
-				</div>
+            {% endfor %}
+        {% endif %}
 
-			<div class="p-2">
-				<div class="card" style="width: 18rem; background-color:#d3bdb0">
-					<img class="card-img-top" src="https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">DIY | Ribbed High Neck Crop Top (Under $3!)</h5>
-						<p class="card-text">If you guys did enjoy this video don't forget to hit the LIKE, COMMENT &
-							SUBSCRIBE for
-							more videos like this, and also turn the notification bell ON to keep you...</p>
-					</div>
-					<div class="card-body">
-						<center>
-								<button type="button" href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-outline-light">Tutorial</button>
-						</center>
-						<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
 
-					</div>
-				</div>
-			</div>
-		</div>
-        {% endfor %}
+
+
+
+
+
+
+
+
+
 
 		<br/>
 		<br/>
