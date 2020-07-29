@@ -1,11 +1,17 @@
 from googleapiclient import discovery
+from urllib.request import Request, urlopen
+import time
+import requests
+import urllib.request
+import re
 from flask import Flask
 from flask_pymongo import PyMongo
 from flask import session
 import bcrypt
 app = Flask(__name__)
+
 def search_youtube(item_name, num_queries=10):
-    api_key = "AIzaSyDChP61rSI95mLnjomoCBXKpnD-YrnZKO4"
+    api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
     youtube = discovery.build('youtube', 'v3', developerKey=api_key)
     queries = [" DIY", "  Thrift Flip", " Upcycle Tutorial"]
     #num_results = 0 
@@ -21,23 +27,29 @@ def search_youtube(item_name, num_queries=10):
                                                             "description": each_item['snippet']['description'], 
                                                             "thumbnail_url": each_item['snippet']['thumbnails']['high']['url']}
         if len(search_results) > 0 and query == "  Thrift Flip": 
+            print("didn't make third query")
             break
-        print(search_results)
+    print(search_results)
     if len(search_results) == 0: 
         return "No upcycling tutorials were found for '" +  item-name + ".' Please try searching with a different item name."
     else: 
         return search_results
-# search_youtube("ribbed crop top", 4)
 
 
-def parse_rating(brand):
 
+def parse_rating(item_brand):
+    formatted = item_brand.lower().replace("&", "and")
+    brand_to_parse = formatted.split() 
+    url_brand_key = brand_to_parse[0]
+    if len(brand_to_parse) > 1: 
+        for i in range(1,  len(brand_to_parse)):
+            url_brand_key += "-" + brand_to_parse[i]
     params = {
         "api_key": "tAgMZD_gGfMN",
         "format": "json",
         "project_token": "tTunoV0JjdT4",
-        "start_url": "https://directory.goodonyou.eco/brand/the-r-collective",
-        "send_email": "1"
+        "start_url": "https://directory.goodonyou.eco/brand/" + url_brand_key,
+        "send_email": "0"
     }
     r = requests.post("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/run", data=params)
     run_token = r.json()["run_token"]
@@ -47,13 +59,15 @@ def parse_rating(brand):
         p = requests.get('https://www.parsehub.com/api/v2/runs/' + run_token, params=params)
         if p.json()["data_ready"] == 1: 
             break
-    
-    print(p.text)
     final_data = requests.get("https://www.parsehub.com/api/v2/projects/tTunoV0JjdT4/last_ready_run/data", params=params)
-    print(final_data.text)
-    return("hellour")
+    ratings = final_data.json()
+    scores = {}
+    scores = {"planet": [int(ratings["planetRate"][0]), ratings["exp_planetRate"]],
+              "people": [int(ratings["peopleRate"][0]), ratings["exp_peopleRate"]],
+              "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
+    return scores
 
-    app.config['MONGO_DBNAME'] = 'database'
+app.config['MONGO_DBNAME'] = 'database'
 
 # URI of database
 app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
@@ -72,3 +86,4 @@ def login_signup(username, password):
             return"Welcome back, " + username + "!"
         else:
             return "Error"
+
