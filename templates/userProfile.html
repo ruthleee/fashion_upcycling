@@ -1,16 +1,16 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upStyle.css') }}">
-    <!-- <link rel="stylesheet" type="text/css"  href="/static/style.css">"> -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upStyle.css') }}">
+	<!-- <link rel="stylesheet" type="text/css"  href="/static/style.css">"> -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-    <!-- font-family: 'Poppins', sans-serif; -->
-    <title>ctrl-alt-thread</title>
+	<!-- font-family: 'Poppins', sans-serif; -->
+	<title>ctrl-alt-thread</title>
 
 </head>
 
@@ -22,29 +22,109 @@
   </button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-					<a style= "font-family: 'Courier Prime', monospace" class="nav-item nav-link active topbar" href="#">About Us</a>
-					<a style= "font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/upcycleSearch"> |  Upcycle</a>
-					<a style= "font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="#"> |  Community</a>
-					<a style= "font-family: 'Courier Prime', monospace"class="nav-item nav-link" href="/userProfile"> |  Your Impact</a>
-                    <a style= "font-family: 'Courier Prime', monospace"class="nav-item nav-link" href="/loginsignup"> |  Log-in/Sign-up</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link active topbar"
+						href="#">About Us</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/upcycleSearch">
+						| Upcycle</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="#"> |
+						Community</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/userProfile"> |
+						Your Impact</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |
+						Log-in/Sign-up</a>
 				</div>
 			</div>
 	</nav>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
 	<center>
-        <img src="../static/sq-ctrl-alt-thread.PNG" width="200">
-        <h1 class="mono plum">{{dispText}}</h1>
-		
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <center><p class="mono plum">Designed by Ruth Lee and Savitha Srinivasan</p></center>
+        <br/>
+        <br/>
+
+		<h1 class="mono green">Your Dashboard</h1>
+		<h1 class="mono plum">{{dispText}}</h1>
+        <br/>
+        <br/>
+		<div class="container">
+            <img src="https://image.flaticon.com/icons/png/512/20/20687.png" width="300">
+            <h2 class="mono" style="position:absolute; top: 460px; left: 0; width: 100%; color: #d3bdb0">Savings: $87</h2>
+			
+		</div>
+        <h2 class="mono mutedP">Portfolio of saved projects</h2>
+        {% for i in range(3) %}
+		<div class="d-flex justify-content-center">
+			<div class="p-2">
+				<div class="card" style="width: 18rem; background-color:#d3bdb0">
+					<img class="card-img-top" src="https://img.youtube.com/vi/gNbMdelyFCU/hqdefault.jpg" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">*easy* cute DIY tops | thrift flip</h5>
+						<p class="card-text">Guys!! I'm so happy with how all these thrift flips turned out. Which one was your fave look? Expand for details:</p>
+					</div>
+					<div class="card-body">
+						<center>
+								<button type="button" href='https://www.youtube.com/watch?v=gNbMdelyFCU' class="btn btn-outline-light">Tutorial</button>
+								<p class="mono">Finished!</p>
+
+						</center>
+						<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
+			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+
+					</div>
+				</div>
+			</div>
+			<div class="p-2">
+				<div class="card" style="width: 18rem; background-color:#d3bdb0">
+					<img class="card-img-top" src="https://img.youtube.com/vi/wx_5YCj2pj0/hqdefault.jpg" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">8 DENIM THRIFT FLIPS (no sew) ☆ resize jeans, diy shorts, distressed denim + more!</h5>
+						<p class="card-text">Who else loves thrift store diys?! 🙋 Today I’m showing you how I remake and thrift flip all my denim jeans ✨ we’ll turn jeans into shorts, no sew resize jeans, diy frayed hems, add denim jacket patches and distress levis! 👕👖 open meeee for tools and patches! ↓↓↓</p>
+					</div>
+					<div class="card-body">
+						<center>
+								<button type="button" href="https://www.youtube.com/watch?v=wx_5YCj2pj0" class="btn btn-outline-light">Tutorial</button>
+								<p class="mono">Finished!</p>
+							
+						</center>
+                        </div>
+						<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
+			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+
+					</div>
+				</div>
+
+			<div class="p-2">
+				<div class="card" style="width: 18rem; background-color:#d3bdb0">
+					<img class="card-img-top" src="https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">DIY | Ribbed High Neck Crop Top (Under $3!)</h5>
+						<p class="card-text">If you guys did enjoy this video don't forget to hit the LIKE, COMMENT &
+							SUBSCRIBE for
+							more videos like this, and also turn the notification bell ON to keep you...</p>
+					</div>
+					<div class="card-body">
+						<center>
+								<button type="button" href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-outline-light">Tutorial</button>
+						</center>
+						<!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
+			<a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+        {% endfor %}
+
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<center>
+			<p class="mono plum">Designed by Ruth Lee and Savitha Srinivasan</p>
+		</center>
 </body>
 
 </html>
