@@ -20,14 +20,8 @@ from flask import session
 import bcrypt
 import json
 
-
-
-
-
 # -- Initialization section --
 app = Flask(__name__)
-
-
 # -- Routes section --
 @app.route('/')
 @app.route('/index')
@@ -59,12 +53,10 @@ def upcycleResults():
             scores = model.parse_rating(user_brand)
             session["scores"] = scores
             session["brand"] = user_brand
-
         score = model.calculate_score(scores)
         return render_template('upcycleResults.html', score=score, scores=scores, keys=keys, search_results=search_results, user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
-
 @app.route('/updateUserProgress', methods=["GET", "POST"])
 def update_user_progress():
     username = session["username"]
@@ -98,8 +90,6 @@ def update_user_progress():
         return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)    
     else: 
         return redirect("/")
-
-
 @app.route('/parse_url')
 def parse_url(): 
     url = 'https://www2.hm.com/en_us/productpage.0889379009.html'
@@ -125,15 +115,11 @@ def parse_url():
     # Print out the text
     # text = soup.get_text()
     # print(soup.text)
-
-
 app.secret_key = "k2u3gogsdboqasd34"
 # name of database
 app.config['MONGO_DBNAME'] = 'database'
-
 # URI of database
 app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
-
 mongo = PyMongo(app)
 @app.route("/loginsignup", methods=["GET", "POST"])
 def loginsignup():
@@ -166,12 +152,10 @@ def loginsignup():
             return render_template("userProfile.html", dispText=dispText,env_score=env_score, savings=savings, fav_items=fav_items )
         else:
           return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
-
 @app.route("/logout", methods=["GET", "POST"])
 def logout(): 
       session.clear()
       return render_template("index.html")
-
 @app.route("/userProfile", methods=["GET", "POST"])
 def userProfile():
     username = session["username"]
@@ -181,4 +165,4 @@ def userProfile():
     env_score = user["env_score"]
     savings = user["savings"]
     fav_items = user["fav_items"]
-    return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)    
+    return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)

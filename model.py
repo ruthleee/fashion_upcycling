@@ -11,8 +11,8 @@ import json
 import bcrypt
 app = Flask(__name__)
 
-api_key="AIzaSyD0yjdfa8JpMW9wNnjOlggtXS_is_yc0Pg"
 
+api_key="AIzaSyD0yjdfa8JpMW9wNnjOlggtXS_is_yc0Pg"
 #"AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
 #cntrl alt thread api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8" out of quota: 10:14 AM PST, Julyy 29th
 #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
@@ -44,9 +44,6 @@ def search_youtube(item_name, num_queries=5):
         return "No upcycling tutorials were found for '" +  item_name + ".' Please try searching with a different item name."
     else: 
         return search_results
-
-
-
 def parse_rating(item_brand):
     formatted = item_brand.lower().replace("&", "and")
     brand_to_parse = formatted.split() 
@@ -77,14 +74,10 @@ def parse_rating(item_brand):
               "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
     # print(scores)
     return scores
-
 app.config['MONGO_DBNAME'] = 'database'
-
 # URI of database
 app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
-
 mongo = PyMongo(app)
-
 def login_signup(username, password, email):
         collection = mongo.db.users
         user = list(collection.find({"username":username}))
