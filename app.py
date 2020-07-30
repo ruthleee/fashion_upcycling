@@ -1,6 +1,3 @@
-# ---- YOUR APP STARTS HERE ----
-# -- Import section --
-# AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s
 from flask import Flask, redirect
 from googleapiclient import discovery
 from googleapiclient import discovery
@@ -27,9 +24,11 @@ app = Flask(__name__)
 @app.route('/index')
 def index():
     return render_template("index.html")
+
 @app.route('/upcycleSearch', methods=["GET", "POST"])
 def upcycleSearch():
     return render_template("upcycleSearch.html")
+
 @app.route('/upcycleResults', methods=["GET", "POST"])
 def upcycleResults():
 
@@ -57,6 +56,7 @@ def upcycleResults():
         return render_template('upcycleResults.html', score=score, scores=scores, keys=keys, search_results=search_results, user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
         return "Error. Nothing submitted. Please go back to the <a href='/upcycleSearch'>Upcycle Page</a>"
+
 @app.route('/updateUserProgress', methods=["GET", "POST"])
 def update_user_progress():
     username = session["username"]
@@ -66,10 +66,7 @@ def update_user_progress():
         user = user[0]
         new_env_score = user['env_score'] + int(request.form["env_score"])
         new_savings = user['savings'] + int(request.form["savings"])
-        # print(user['fav_items']
-        print("PLEASE WORK!!!!")
         all_items = session["data"]
-        print(all_items[session["keys"][0]])
         fav_item_index = int(request.form["fav_item_index"])
         new_item = all_items[session["keys"][fav_item_index]]
         print(new_item)
@@ -77,12 +74,6 @@ def update_user_progress():
             {"username": username}, 
             {"$push": {"fav_items": new_item}}
         )
-
-        # new_fav_items= user['fav_items'].append(request.form["fav_item"])
-        print(new_env_score)
-        print(new_savings)
-        # print(new_fav_items)
-        # new_fav_items = ["hi"]
         collection.update({"username": username}, { "$set": {"savings": new_savings, "env_score": new_env_score}})
         env_score = user["env_score"]
         savings = user["savings"]
@@ -90,31 +81,7 @@ def update_user_progress():
         return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)    
     else: 
         return redirect("/")
-@app.route('/parse_url')
-def parse_url(): 
-    url = 'https://www2.hm.com/en_us/productpage.0889379009.html'
-    headers = {}
-    headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
-    req = Request(url=url, headers=headers) 
-    html = urlopen(req).read() 
-    soup = BeautifulSoup(html, 'lxml')
-    type(soup)
-    title = soup.title
-    print(title)
-    head_elem = soup.find('h1')
-    print(head_elem.text)
-    # def contains_price(s3):
-    #  return ("$" in s3)
-    # print(soup.find_all(string=contains_price))
-    return ("hello")
-    # print(soup.find_all('html'))
-    # text = soup.get_text()
-    # print(text.strip('\n'))
-    # prices = soup.find_all('span')
-    # print(prices)
-    # Print out the text
-    # text = soup.get_text()
-    # print(soup.text)
+
 app.secret_key = "k2u3gogsdboqasd34"
 # name of database
 app.config['MONGO_DBNAME'] = 'database'
@@ -132,7 +99,9 @@ def loginsignup():
         collection = mongo.db.users
         user = list(collection.find({"username":username}))
         if len(user) == 0:
-            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0, "env_score": 0, "fav_items":[]})
+            collection.insert_one({"username": username, "email":email, 
+                                    "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), 
+                                    "savings":0, "env_score": 0, "fav_items":[]})
             session["username"] = username
             session["data"] = None
             session["scores"] = None
@@ -152,10 +121,12 @@ def loginsignup():
             return render_template("userProfile.html", dispText=dispText,env_score=env_score, savings=savings, fav_items=fav_items )
         else:
           return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
+
 @app.route("/logout", methods=["GET", "POST"])
 def logout(): 
       session.clear()
       return render_template("index.html")
+
 @app.route("/userProfile", methods=["GET", "POST"])
 def userProfile():
     username = session["username"]

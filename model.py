@@ -19,17 +19,12 @@ api_key="AIzaSyD0yjdfa8JpMW9wNnjOlggtXS_is_yc0Pg"
 youtube = discovery.build('youtube', 'v3', developerKey=api_key)
 
 def search_youtube(item_name, num_queries=5):
-    # api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8"
-    # #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
-    # youtube = discovery.build('youtube', 'v3', developerKey=api_key)
     queries = [" DIY", "  Thrift Flip", " Upcycle Tutorial"]
-    #num_results = 0 
     search_results = {}
     for query in queries: 
         search_by = item_name + query
         request = youtube.search().list(q=search_by, part='snippet', type='video', maxResults=num_queries, pageToken=None)
         result = request.execute() 
-        #num_results += result['pageInfo.totalResults']
         items = result['items']
         for each_item in items: 
             search_results[each_item["snippet"]["title"]] = {"video_url": "https://www.youtube.com/watch?v=" + each_item["id"]["videoId"], 
@@ -37,13 +32,12 @@ def search_youtube(item_name, num_queries=5):
                                                             "thumbnail_url": each_item["snippet"]["thumbnails"]["high"]["url"],
                                                             "title": each_item["snippet"]["title"] }
         if len(search_results) > 0 and query =="  Thrift Flip": 
-            print("didn't make third query")
             break
-    # print(type(search_results))
     if len(search_results) == 0: 
         return "No upcycling tutorials were found for '" +  item_name + ".' Please try searching with a different item name."
     else: 
         return search_results
+
 def parse_rating(item_brand):
     formatted = item_brand.lower().replace("&", "and")
     brand_to_parse = formatted.split() 
@@ -72,8 +66,8 @@ def parse_rating(item_brand):
     scores = {"planet": [int(ratings["planetRate"][0]), ratings["exp_planetRate"]],
               "people": [int(ratings["peopleRate"][0]), ratings["exp_peopleRate"]],
               "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
-    # print(scores)
     return scores
+
 app.config['MONGO_DBNAME'] = 'database'
 # URI of database
 app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
@@ -92,6 +86,7 @@ def login_signup(username, password, email):
             return"Welcome back, " + username + "!"
         else:
             return "Error"
+
 def calculate_score(scores):
     print(scores['planet'][0])
     print(scores["animal"][0])
