@@ -12,7 +12,7 @@ import bcrypt
 app = Flask(__name__)
 
 
-api_key="AIzaSyD0yjdfa8JpMW9wNnjOlggtXS_is_yc0Pg"
+api_key="AIzaSyA6zgAwgRFwTy8EhxROAtywKxQSr31_Zcw"
 #"AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
 #cntrl alt thread api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8" out of quota: 10:14 AM PST, Julyy 29th
 #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
@@ -67,25 +67,6 @@ def parse_rating(item_brand):
               "people": [int(ratings["peopleRate"][0]), ratings["exp_peopleRate"]],
               "animal": [int(ratings["animalRate"][0]), ratings["exp_animalRate"]]}
     return scores
-
-app.config['MONGO_DBNAME'] = 'database'
-# URI of database
-app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
-mongo = PyMongo(app)
-def login_signup(username, password, email):
-        collection = mongo.db.users
-        user = list(collection.find({"username":username}))
-        if len(user) == 0:
-            collection.insert_one({"username": username, "email":email, "password": str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()), 'utf-8'), "savings":0, "env_score": 0})
-            session["username"] = username
-            return("Welcome as a new user, " + "user")
-        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
-            session["username"] = username
-            # foo = 12
-            # collection.update({"username": "user5"},{ "$set": {"savings": foo,  "env_score": 5}})
-            return"Welcome back, " + username + "!"
-        else:
-            return "Error"
 
 def calculate_score(scores):
     print(scores['planet'][0])

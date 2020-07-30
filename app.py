@@ -8,7 +8,7 @@ import urllib.request
 import re
 from urllib.request import Request, urlopen
 import time
-from model import search_youtube, login_signup
+from model import search_youtube
 import model
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
@@ -80,7 +80,7 @@ def update_user_progress():
         env_score = user["env_score"]
         savings = user["savings"]
         fav_items = user["fav_items"]
-        return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)    
+        return render_template("userProfile.html", username = username,  env_score=env_score, savings=savings, fav_items=fav_items)    
     else: 
         return redirect("/")
 
@@ -108,7 +108,7 @@ def loginsignup():
             session["data"] = None
             session["scores"] = None
             session["keys"] = None
-            dispText= "Welcome," + username + "!"
+            dispText= "Welcome to the ctrl-alt-thread family, " + username + "!"
             return render_template("userProfile.html", dispText=dispText)
         elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
             session["username"] = username
@@ -120,7 +120,7 @@ def loginsignup():
             savings = user["savings"]
             fav_items = user["fav_items"]
             dispText= "Welcome back, " + username + "!"
-            return render_template("userProfile.html", dispText=dispText,env_score=env_score, savings=savings, fav_items=fav_items )
+            return render_template("userProfile.html", username = username, dispText=dispText,env_score=env_score, savings=savings, fav_items=fav_items )
         else:
           return "Error. Username and/or password is incorrect. <a href='/login_signup.html>login/signup</a> again"
 
@@ -138,4 +138,4 @@ def userProfile():
     env_score = user["env_score"]
     savings = user["savings"]
     fav_items = user["fav_items"]
-    return render_template("userProfile.html", env_score=env_score, savings=savings, fav_items=fav_items)
+    return render_template("userProfile.html", username = username, env_score=env_score, savings=savings, fav_items=fav_items)

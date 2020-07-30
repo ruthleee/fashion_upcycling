@@ -9,20 +9,11 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&family=Oswald&display=swap" rel="stylesheet">
 	<title>ctrl-alt-thread</title>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-    <script type="text/javascript">
-    function cmd(savings, env_score, username){
-        $.ajax(
-            {
-            type: "POST",
-            url: `127.0.0.1:5000/updateUserProgress?savings=${savings}&env_score=${env_score}&username=${username}`,
-            success: function () { 
-                alert("User Progress Updated")
-            },
-        });                
-    }
-    </script> -->
+ 
 
 </head>
 
@@ -34,8 +25,8 @@
   </button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link active topbar"
-						href="#">About Us</a>
+				<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link active topbar"
+						href="/aboutUs">About Us</a>
 					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/upcycleSearch">
 						| Upcycle</a>
 					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/userProfile"> |
@@ -52,30 +43,11 @@
     <br/>
     <br/>
     <br/>
-	<center><h1 class="mono green">Upcyling options for a {{user_garment}}!</h1></center>
-    <center><h2 class="mono green"> Price savings: ${{user_price}} Environmental Friendliness Points: {{score}} </h2><center>
-    <center> <h6 class="mono green"> {{user_brand.capitalize()}} has a sustainability score of {{100-score}}%. You can earn up to 100 points per upcycle. A score of 100 points indicates that the brand you had intended to purchase has a sustainability score of 0%.  </h6><center>
+	<center><h1 class="oswald green">upcyling options for a {{user_garment}}!</h1></center>
+    <center><h2 class="oswald plum"> price savings: ${{user_price}} | environmental friendliness points: {{score}} </h2><center>
+    <center> <p class="lato green"> *{{user_brand.lower()}} has a sustainability score of {{100-score}}%. you can earn up to 100 points per upcycle. a score of 100 points indicates that the brand you had intended to purchase has a sustainability score of 0%. </p><center>
     
-    <!-- <div class="container">
-    <div class="row">
-    {% for i in range(3) %}
-    
-            <div class = "col-md-2"></div>
-            <div class="col d-flex justify-content-center">
-                <div class="card bg-dark" style="width: 18rem;">
-                <img src= "https://i.ytimg.com/vi/sDpBfi-BE3s/hqdefault.jpg" class="card-img-top" alt="...">
-                <div class="card-body mx-auto">
-                    <h5 class="card-title text-white text-center">Number {{i+1}} </h5>
-                    <p class="card-text text-white text-center">DIY | Ribbed High Neck Crop Top (Under $3!)</p>
-                    <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="btn btn-success">watch now</a>
-                </div>
-                </div>
-            </div>
-            <div class = "col-md-2"> </div>
-        
-            {% endfor %}
-        </div>
-    </div> -->
+   
     <div class="d-flex justify-content-center">
             <div class="p-2"><div class="card" style="width: 18rem; background-color:#d3bdb0">
             <img class="card-img-top" src= {{search_results[keys[0]]["thumbnail_url"]}} alt="Card image cap">
@@ -90,7 +62,7 @@
                            <a href={{search_results[keys[0]]["video_url"]}}  class="btn btn-outline-light">Tutorial</a>
                         </div>
                     </div>
-                    <!-- <button type="button" href= "{{search_results[keys[0]]["video_url"]}}" class="btn btn-outline-light">Tutorial</button>  -->
+        
                     <div class="row text-center">
                         <div class="col">
                             <form method="post" action="/updateUserProgress">
@@ -103,8 +75,7 @@
                      </div>
                     
                 </div></center>
-                <!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-                <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
+                
 
             </div>
         </div></div>
@@ -123,7 +94,7 @@
                            <a href={{search_results[keys[1]]["video_url"]}}  class="btn btn-outline-light">Tutorial</a>
                         </div>
                     </div>
-                    <!-- <button type="button" href= "{{search_results[keys[0]]["video_url"]}}" class="btn btn-outline-light">Tutorial</button>  -->
+                
                     <div class="row text-center">
                         <div class="col">
                             <form method="post" action="/updateUserProgress">
@@ -136,8 +107,6 @@
                      </div>
                     
                 </div></center>
-                <!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-                <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
 
             </div>
         </div></div>
@@ -156,23 +125,18 @@
                            <a href={{search_results[keys[2]]["video_url"]}}  class="btn btn-outline-light">Tutorial</a>
                         </div>
                     </div>
-                    <!-- <button type="button" href= "{{search_results[keys[0]]["video_url"]}}" class="btn btn-outline-light">Tutorial</button>  -->
                     <div class="row text-center">
                         <div class="col">
                             <form method="post" action="/updateUserProgress">
                             <input type="text" name="env_score" style= "display:none" value="{{score}}" >
                             <input type="text" name="savings" style= "display:none" value="{{user_price}}" >
                             <input name="fav_item_index" style= "display:none" value="2">
-                            <!-- <input type="text" name="fav_item" style= "display:none" value="{{search_results[keys[2]]}}" > -->
                             <button type="submit" class="btn btn-outline-light">Add to portfolio</button>
                             </form>
                          </div>
                      </div>
                     
                 </div></center>
-                <!-- <a href="/userProfile" class="btn btn-light">Add to portfolio</a>
-                <a href="https://www.youtube.com/watch?v=MgRTDmO75TQ" class="card-link">Watch now!</a> -->
-
             </div>
         </div></div>
        
