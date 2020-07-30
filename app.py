@@ -80,7 +80,8 @@ def update_user_progress():
         env_score = user["env_score"]
         savings = user["savings"]
         fav_items = user["fav_items"]
-        return render_template("userProfile.html", username = username,  env_score=env_score, savings=savings, fav_items=fav_items)    
+        return render_template("userProfile.html", username = username,  
+                            env_score=env_score, savings=savings, fav_items=fav_items)    
     else: 
         return redirect("/")
 
@@ -109,7 +110,7 @@ def loginsignup():
             session["scores"] = None
             session["keys"] = None
             dispText= "Welcome to the ctrl-alt-thread family, " + username + "!"
-            return render_template("userProfile.html", dispText=dispText)
+            return render_template("userProfile.html", username=username, dispText=dispText)
         elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
             session["username"] = username
             session["data"] = None
@@ -131,11 +132,14 @@ def logout():
 
 @app.route("/userProfile", methods=["GET", "POST"])
 def userProfile():
-    username = session["username"]
-    collection = mongo.db.users
-    user = list(collection.find({"username":username}))
-    user = user[0]
-    env_score = user["env_score"]
-    savings = user["savings"]
-    fav_items = user["fav_items"]
-    return render_template("userProfile.html", username = username, env_score=env_score, savings=savings, fav_items=fav_items)
+    if session: 
+        username = session["username"]
+        collection = mongo.db.users
+        user = list(collection.find({"username":username}))
+        user = user[0]
+        env_score = user["env_score"]
+        savings = user["savings"]
+        fav_items = user["fav_items"]
+        return render_template("userProfile.html", username = username, env_score=env_score, savings=savings, fav_items=fav_items)
+    else:
+        return render_template("login_signup.html")
