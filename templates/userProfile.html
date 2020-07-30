@@ -9,6 +9,8 @@
 		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Oswald&display=swap" rel="stylesheet">
 	<!-- font-family: 'Poppins', sans-serif; -->
 	<title>ctrl-alt-thread</title>
 
@@ -26,12 +28,12 @@
 						href="#">About Us</a>
 					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/upcycleSearch">
 						| Upcycle</a>
-					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="#"> |
-						Community</a>
 					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/userProfile"> |
-						Your Impact</a>
+						Your Dashboard</a>
 					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |
-						Log-in/Sign-up</a>
+						Log-in</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/logout"> | Log
+						Out</a>
 				</div>
 			</div>
 	</nav>
@@ -41,19 +43,30 @@
 	<br/>
 	<center>
         <br/>
-        <br/>
-
-		<h1 class="mono green">Your Dashboard</h1>
-		<h1 class="mono plum">{{dispText}}</h1>
+		<h1 class="oswald green" style="font-size:40px">Your Dashboard</h1>
+		<h1 class="oswald plum">{{dispText}}</h1>
         <br/>
         <br/>
 		<div class="container">
-            <img src="https://image.flaticon.com/icons/png/512/20/20687.png" width="300">
-            <h4 class="mono" style="position:absolute; top: 460px; left: 0; width: 100%; color: #ffffff">Cumulative Savings: ${{savings}}</h4>
-            <h4 class="mono" style="position:absolute; top: 500px; left: 0; width: 100%; color: #ffffff">Cumulative Environment Friendliness Points: {{env_score}}</h4>
-			
+            <div class="row">
+                <div class="col">
+                    <center><img src="https://image.flaticon.com/icons/png/512/20/20687.png" width="200"></center>
+                </div>
+                
+                <div class="col-8">
+                    <div class="mutedPB pt-5 pb-5">
+                        <br/> 
+
+                        <h4 class="lato" style="width: 100%; color: #faf6e3">Cumulative Savings: ${{savings}}</h4>
+                        <h4 class="lato" style="width: 100%; color: #faf6e3">Cumulative Environment Friendliness Points: {{env_score}}</h4>
+                        <br/> 
+ 
+                    </div>
+                </div>
+            </div>	
 		</div>
-        <h2 class="mono mutedP">Portfolio of saved projects</h2>
+        <br/>
+        <h2 class="oswald mutedP" style="font-size:40px">Portfolio of Saved Projects</h2>
 
         {% if fav_items| length > 0%}
 
@@ -61,12 +74,12 @@
                 <div class="row">
                         <div class = "col-md-2"></div>
                         <div class="col d-flex justify-content-center">
-                            <div class="card bg-dark" style="width: 18rem;">
+                            <div class="card " style="width: 18rem; background-color:#d3bdb0">
                             <img src= "{{fav_items[i]['thumbnail_url']}}" class="card-img-top" alt="...">
                             <div class="card-body mx-auto">
-                                <h5 class="card-title text-white text-center">{{fav_items[i]["title"]}} </h5>
-                                <p class="card-text text-white text-center"> Finished!</p>
-                                <a href= "{{fav_items[i]['video_url']}}" class="btn btn-success">Watch</a>
+                                <h5 class="card-title ">{{fav_items[i]["title"]}} </h5>
+                                <p class="card-text"> Finished!</p>
+                                <a href= "{{fav_items[i]['video_url']}}" class="btn btn-outline-light">Tutorial</a>
                             </div>
                             </div>
                         </div>

@@ -12,18 +12,36 @@
 .mono{
     font-family: 'Courier Prime', monospace;
 }
-
+.oswald{
+    font-family: 'Oswald', sans-serif;
+}
 .mutedP{
     color: #715b64;
 }
-
+.mutedPB{
+    background-color: #715b64;
+}
+.lato{
+    font-family: 'Lato', sans-serif;
+}
 .plum{
     color:#854774;
 }
-
+.plumB{
+    background-color:#854774;
+}
+.roseB{
+    background-color:#665259;
+}
+.rose{
+    color:#665259;
+}
 .pushCenter{
-  padding-right: 15%;
-  padding-left: 15%;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+.khaki{
+    color:#c1ae9f;
 }
 
 
