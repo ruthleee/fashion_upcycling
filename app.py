@@ -43,10 +43,6 @@ def upcycleResults():
         user_garment = request.form["garment"]
         user_brand = request.form["brand"]
         user_price = request.form["price"]
-        
-       
-        session["garment"] = user_garment
-        session["brand"] = user_brand
         if session["data"] != None and session["keys"] != None and session["garment"] == user_garment :
             search_results = session["data"]
             keys = session["keys"]
@@ -55,12 +51,14 @@ def upcycleResults():
             session["data"] = search_results
             keys = list(search_results.keys())
             session["keys"] = keys
+            session["garment"] = user_garment
 
         if session["scores"] != None and session["brand"] == user_brand:
             scores = session["scores"]
         else: 
             scores = model.parse_rating(user_brand)
             session["scores"] = scores
+            session["brand"] = user_brand
 
         score = model.calculate_score(scores)
         return render_template('upcycleResults.html', score=score, scores=scores, keys=keys, search_results=search_results, user_garment=user_garment, user_brand=user_brand, user_price=user_price)

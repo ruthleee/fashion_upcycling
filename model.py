@@ -11,7 +11,9 @@ import json
 import bcrypt
 app = Flask(__name__)
 
-api_key="AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
+api_key="AIzaSyD0yjdfa8JpMW9wNnjOlggtXS_is_yc0Pg"
+
+#"AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
 #cntrl alt thread api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8" out of quota: 10:14 AM PST, Julyy 29th
 #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
 youtube = discovery.build('youtube', 'v3', developerKey=api_key)
@@ -102,4 +104,4 @@ def calculate_score(scores):
     print(scores["animal"][0])
     print(scores["people"][0])
     numerator = scores["planet"][0] + scores["people"][0] + scores["animal"][0]
-    return int((float(numerator)/15.0)*100.0)
+    return 100-int((float(numerator)/15.0)*100.0)
