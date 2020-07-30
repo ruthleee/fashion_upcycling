@@ -1,0 +1,114 @@
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upStyle.css') }}">
+	<!-- <link rel="stylesheet" type="text/css"  href="/static/style.css">"> -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Oswald&display=swap" rel="stylesheet">
+	<!-- font-family: 'Poppins', sans-serif; -->
+	<title>ctrl-alt-thread</title>
+
+</head>
+
+<body style="background-color:#d3bdb0">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #c1ae9f;">
+		<a class="navbar-brand" href="/index"><img src="../static/sq-ctrl-alt-thread.PNG" id="logo" width="70"/></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link active topbar"
+						href="#">About Us</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/upcycleSearch">
+						| Upcycle</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/userProfile"> |
+						Your Dashboard</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/loginsignup"> |
+						Log-in</a>
+					<a style="font-family: 'Courier Prime', monospace" class="nav-item nav-link" href="/logout"> | Log
+						Out</a>
+				</div>
+			</div>
+	</nav>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<center>
+        <br/>
+		<h1 class="oswald green" style="font-size:40px">Your Dashboard</h1>
+		<h1 class="oswald plum">{{dispText}}</h1>
+        <br/>
+        <br/>
+		<div class="container">
+            <div class="row">
+                <div class="col">
+                    <center><img src="https://image.flaticon.com/icons/png/512/20/20687.png" width="200"></center>
+                </div>
+                
+                <div class="col-8">
+                    <div class="mutedPB pt-5 pb-5">
+                        <br/> 
+
+                        <h4 class="lato" style="width: 100%; color: #faf6e3">Cumulative Savings: ${{savings}}</h4>
+                        <h4 class="lato" style="width: 100%; color: #faf6e3">Cumulative Environment Friendliness Points: {{env_score}}</h4>
+                        <br/> 
+ 
+                    </div>
+                </div>
+            </div>	
+		</div>
+        <br/>
+        <h2 class="oswald mutedP" style="font-size:40px">Portfolio of Saved Projects</h2>
+
+        {% if fav_items| length > 0%}
+
+            {% for i in range(fav_items| length) %}
+                <div class="row">
+                        <div class = "col-md-2"></div>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card " style="width: 18rem; background-color:#d3bdb0">
+                            <img src= "{{fav_items[i]['thumbnail_url']}}" class="card-img-top" alt="...">
+                            <div class="card-body mx-auto">
+                                <h5 class="card-title ">{{fav_items[i]["title"]}} </h5>
+                                <p class="card-text"> Finished!</p>
+                                <a href= "{{fav_items[i]['video_url']}}" class="btn btn-outline-light">Tutorial</a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class = "col-md-2"> </div>
+                    </div>
+
+            {% endfor %}
+        {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<center>
+			<p class="mono plum">Designed by Ruth Lee and Savitha Srinivasan</p>
+		</center>
+</body>
+
+</html>

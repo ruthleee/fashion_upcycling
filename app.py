@@ -24,7 +24,9 @@ app = Flask(__name__)
 @app.route('/index')
 def index():
     return render_template("index.html")
-
+@app.route('/aboutUs')
+def aboutUs():
+    return render_template("aboutUs.html")
 @app.route('/upcycleSearch', methods=["GET", "POST"])
 def upcycleSearch():
     return render_template("upcycleSearch.html")
