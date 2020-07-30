@@ -11,11 +11,14 @@ import time
 from model import search_youtube
 import model
 from urllib.request import urlopen, Request
-from bs4 import BeautifulSoup
 from flask_pymongo import PyMongo
 from flask import session
 import bcrypt
-import json
+import os
+mongo_pass = os.environ["mongo_pass"]
+secret_key = os.environ["secret_key"]
+mongo_user = os.environ["mongo_user"]
+
 
 # -- Initialization section --
 app = Flask(__name__)
@@ -85,11 +88,11 @@ def update_user_progress():
     else: 
         return redirect("/")
 
-app.secret_key = "k2u3gogsdboqasd34"
+app.secret_key = secret_key
 # name of database
 app.config['MONGO_DBNAME'] = 'database'
 # URI of database
-app.config['MONGO_URI'] = 'mongodb+srv://admin:OmSyXfRK8jG98xVq@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
+app.config['MONGO_URI'] = f'mongodb+srv://{mongo_user}:{mongo_pass}@couture.zvxpp.mongodb.net/database?retryWrites=true&w=majority'
 mongo = PyMongo(app)
 @app.route("/loginsignup", methods=["GET", "POST"])
 def loginsignup():

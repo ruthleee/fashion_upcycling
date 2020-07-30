@@ -10,9 +10,11 @@ from flask import session
 import json
 import bcrypt
 app = Flask(__name__)
+import os
+youtube_api = os.environ["youtube_api"]
+parsehub_api = os.environ["parsehub_api"]
 
-
-api_key="AIzaSyA6zgAwgRFwTy8EhxROAtywKxQSr31_Zcw"
+api_key=youtube_api
 #"AIzaSyBS_-xa-p0IOcqqvv_sIkwBSZgYN4y2qhU"
 #cntrl alt thread api_key = "AIzaSyDai2vPdaNi_bG3ej-2YVt1dDky5IEOrk8" out of quota: 10:14 AM PST, Julyy 29th
 #old: fashion api_key = "AIzaSyCSsfexfhI7I3r-MXUuSmD3_0oVRNLjs1s"
@@ -46,7 +48,7 @@ def parse_rating(item_brand):
         for i in range(1,  len(brand_to_parse)):
             url_brand_key += "-" + brand_to_parse[i]
     params = {
-        "api_key": "tAgMZD_gGfMN",
+        "api_key": parsehub_api,
         "format": "json",
         "project_token": "tTunoV0JjdT4",
         "start_url": "https://directory.goodonyou.eco/brand/" + url_brand_key,
