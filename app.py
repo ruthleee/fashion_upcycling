@@ -32,7 +32,11 @@ def aboutUs():
     return render_template("aboutUs.html")
 @app.route('/upcycleSearch', methods=["GET", "POST"])
 def upcycleSearch():
-    return render_template("upcycleSearch.html")
+    if session:
+        return render_template("upcycleSearch.html")
+    else:
+        return render_template("login_signup.html")
+
 
 @app.route('/upcycleResults', methods=["GET", "POST"])
 def upcycleResults():
