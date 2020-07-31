@@ -58,9 +58,10 @@ def upcycleResults():
         if session["scores"] != None and session["brand"] == user_brand:
             scores = session["scores"]
         else: 
+            session["brand"] = user_brand
             scores = model.parse_rating(user_brand)
             session["scores"] = scores
-            session["brand"] = user_brand
+            
         score = model.calculate_score(scores)
         return render_template('upcycleResults.html', score=score, scores=scores, keys=keys, search_results=search_results, user_garment=user_garment, user_brand=user_brand, user_price=user_price)
     else:
