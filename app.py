@@ -151,3 +151,7 @@ def userProfile():
         return render_template("userProfile.html", username = username, env_score=env_score, savings=savings, fav_items=fav_items)
     else:
         return render_template("login_signup.html")
+
+@app.route("/google", methods=["GET", "POST"])
+def google():
+    return render_template("google.html")
